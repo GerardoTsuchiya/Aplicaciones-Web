@@ -1,0 +1,270 @@
+/* ── App layout ── */
+.app-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.app-header h1 {
+  margin-bottom: 0;
+}
+
+.btn-tema {
+  background: var(--code-bg);
+  color: var(--text-h);
+  border: 1px solid var(--border);
+}
+
+/* ── Form ── */
+.form-agregar {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.form-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.form-campo label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: left;
+}
+
+.form-campo input {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-campo input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.form-campo input::placeholder {
+  color: var(--text);
+  opacity: 0.5;
+}
+
+/* ── Buttons ── */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-agregar {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-completar {
+  background: var(--slate);
+  color: #fff;
+}
+
+.btn-eliminar {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ── Bulk actions bar ── */
+.acciones-masivas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: 10px;
+}
+
+.seleccion-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-right: auto;
+}
+
+/* ── Table wrapper ── */
+.tabla-wrapper {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.tabla-tareas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ── Header ── */
+.tabla-tareas thead tr {
+  background: var(--slate);
+}
+
+.tabla-tareas th {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--custard);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--cherry);
+}
+
+/* ── Rows ── */
+.tabla-tareas td {
+  padding: 14px 16px;
+  font-size: 15px;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.tabla-tareas tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-tareas tbody tr.fila {
+  transition: background-color 0.15s;
+}
+
+.tabla-tareas tbody tr.fila:hover {
+  background: var(--accent-bg);
+}
+
+/* ── Selected row ── */
+.fila-seleccionada {
+  background: var(--accent-bg) !important;
+}
+
+/* ── Completed row ── */
+.fila-completada .col-titulo,
+.fila-completada .col-descripcion {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* ── Column sizing ── */
+.col-check {
+  width: 40px;
+  text-align: center !important;
+}
+
+.col-estado {
+  width: 130px;
+}
+
+.col-fecha {
+  white-space: nowrap;
+}
+
+.col-acciones {
+  width: 120px;
+}
+
+/* ── Checkbox styling ── */
+.tabla-tareas input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* ── Badge ── */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-pendiente {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.badge-completado {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+/* ── Select dropdown ── */
+.select-acciones {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.select-acciones:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ── Empty state ── */
+.tabla-vacia {
+  text-align: center !important;
+  padding: 48px 16px !important;
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .form-agregar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tabla-wrapper {
+    overflow-x: auto;
+  }
+
+  .acciones-masivas {
+    flex-wrap: wrap;
+  }
+}
