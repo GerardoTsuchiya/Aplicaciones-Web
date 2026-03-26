@@ -99,7 +99,7 @@ export default function App() {
               <th className="col-acciones">Acciones</th>
             </tr>
             <tr className="filtro-fila">
-              <td colSpan={6} className="filtro-celda">
+              <td colSpan={6}>
                 <div className="filtro-controles">
                   <input
                     className="filtro-input"
