@@ -1,56 +1,106 @@
+/* ── Keyframes ── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes slideFadeIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
 /* ── App layout ── */
 .app-container {
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
-  padding: 40px 24px;
+  padding: 48px 28px 80px;
 }
 
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .app-header h1 {
   margin-bottom: 0;
 }
 
-.btn-tema {
-  background: var(--code-bg);
-  color: var(--text-h);
-  border: 1px solid var(--border);
+/* Gradient divider under header */
+.header-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border) 15%,
+    var(--accent-border) 50%,
+    var(--border) 85%,
+    transparent
+  );
+  margin-bottom: 28px;
 }
 
-/* ── Form ── */
+/* ── Theme toggle ── */
+.btn-tema {
+  background: var(--code-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: var(--sans);
+  letter-spacing: 0.3px;
+}
+
+.btn-tema:hover {
+  opacity: 1 !important;
+  transform: none !important;
+  background: var(--accent-bg);
+  border-color: var(--accent-border);
+  color: var(--accent);
+  box-shadow: none !important;
+}
+
+/* ── Form card ── */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  animation: fadeSlideIn 0.35s ease;
+}
+
 .form-agregar {
   display: flex;
   gap: 12px;
   align-items: flex-end;
-  margin-bottom: 24px;
 }
 
 .form-campo {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   flex: 1;
 }
 
 .form-campo label {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   color: var(--text);
   text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  opacity: 0.75;
 }
 
 .form-campo input {
   padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   background: var(--bg);
   color: var(--text-h);
   font-size: 15px;
+  font-family: var(--sans);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -62,36 +112,42 @@
 
 .form-campo input::placeholder {
   color: var(--text);
-  opacity: 0.5;
+  opacity: 0.40;
 }
 
 /* ── Buttons ── */
 .btn {
-  padding: 10px 18px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
+  font-family: var(--sans);
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
+  transition: opacity 0.2s, transform 0.14s, box-shadow 0.2s;
   white-space: nowrap;
+  letter-spacing: 0.2px;
 }
 
 .btn:hover {
-  opacity: 0.85;
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.97) translateY(0);
+  box-shadow: none;
 }
 
 .btn-agregar {
   background: var(--accent);
   color: #fff;
+  box-shadow: 0 2px 8px rgba(193, 127, 62, 0.28);
 }
 
 .btn-completar {
-  background: var(--slate);
+  background: var(--success);
   color: #fff;
 }
 
@@ -104,27 +160,30 @@
 .acciones-masivas {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 16px;
-  padding: 12px 16px;
+  padding: 12px 18px;
   background: var(--accent-bg);
   border: 1px solid var(--accent-border);
-  border-radius: 10px;
+  border-radius: 12px;
+  animation: slideFadeIn 0.2s ease;
 }
 
 .seleccion-count {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent);
   margin-right: auto;
+  font-family: var(--sans);
 }
 
 /* ── Table wrapper ── */
 .tabla-wrapper {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  background: var(--surface);
 }
 
 .tabla-tareas {
@@ -132,20 +191,20 @@
   border-collapse: collapse;
 }
 
-/* ── Header ── */
-.tabla-tareas thead tr {
-  background: var(--slate);
+/* ── Column headers ── */
+.tabla-tareas thead tr:first-child {
+  background: var(--table-header);
 }
 
 .tabla-tareas th {
-  padding: 12px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #ffffff;
+  padding: 14px 16px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: rgba(245, 230, 200, 0.75);
   text-align: left;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid var(--cherry);
+  letter-spacing: 1.1px;
+  font-family: var(--sans);
 }
 
 /* ── Rows ── */
@@ -163,7 +222,20 @@
 
 .tabla-tareas tbody tr.fila {
   transition: background-color 0.15s;
+  animation: fadeSlideIn 0.28s ease backwards;
 }
+
+/* Staggered entry for rows */
+.tabla-tareas tbody tr.fila:nth-child(1)  { animation-delay:   0ms; }
+.tabla-tareas tbody tr.fila:nth-child(2)  { animation-delay:  35ms; }
+.tabla-tareas tbody tr.fila:nth-child(3)  { animation-delay:  70ms; }
+.tabla-tareas tbody tr.fila:nth-child(4)  { animation-delay: 105ms; }
+.tabla-tareas tbody tr.fila:nth-child(5)  { animation-delay: 140ms; }
+.tabla-tareas tbody tr.fila:nth-child(6)  { animation-delay: 175ms; }
+.tabla-tareas tbody tr.fila:nth-child(7)  { animation-delay: 210ms; }
+.tabla-tareas tbody tr.fila:nth-child(8)  { animation-delay: 245ms; }
+.tabla-tareas tbody tr.fila:nth-child(9)  { animation-delay: 280ms; }
+.tabla-tareas tbody tr.fila:nth-child(10) { animation-delay: 315ms; }
 
 .tabla-tareas tbody tr.fila:hover {
   background: var(--accent-bg);
@@ -178,7 +250,7 @@
 .fila-completada .col-titulo,
 .fila-completada .col-descripcion {
   text-decoration: line-through;
-  opacity: 0.5;
+  opacity: 0.42;
 }
 
 /* ── Column sizing ── */
@@ -193,13 +265,15 @@
 
 .col-fecha {
   white-space: nowrap;
+  font-size: 13px;
+  opacity: 0.70;
 }
 
 .col-acciones {
   width: 120px;
 }
 
-/* ── Checkbox styling ── */
+/* ── Checkbox ── */
 .tabla-tareas input[type="checkbox"] {
   width: 16px;
   height: 16px;
@@ -210,12 +284,13 @@
 /* ── Badge ── */
 .badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 4px 11px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.7px;
+  font-family: var(--sans);
 }
 
 .badge-pendiente {
@@ -230,12 +305,13 @@
 
 /* ── Select dropdown ── */
 .select-acciones {
-  padding: 8px 12px;
+  padding: 7px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--surface);
   color: var(--text-h);
   font-size: 13px;
+  font-family: var(--sans);
   cursor: pointer;
   transition: border-color 0.2s;
 }
@@ -248,16 +324,19 @@
 /* ── Empty state ── */
 .tabla-vacia {
   text-align: center !important;
-  padding: 48px 16px !important;
+  padding: 60px 16px !important;
   color: var(--text);
   font-style: italic;
+  font-family: var(--heading);
+  font-size: 17px;
+  opacity: 0.65;
 }
 
 /* ── Filter row ── */
 .filtro-fila td {
-  padding: 8px 16px;
-  background: var(--slate);
-  border-bottom: 2px solid var(--cherry);
+  padding: 10px 16px;
+  background: var(--table-header);
+  border-bottom: none;
 }
 
 .filtro-controles {
@@ -268,42 +347,46 @@
 
 .filtro-input {
   flex: 1;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(245, 230, 200, 0.18);
+  background: rgba(245, 230, 200, 0.07);
+  color: rgba(245, 230, 200, 0.9);
   font-size: 13px;
-  transition: border-color 0.2s;
+  font-family: var(--sans);
+  transition: border-color 0.2s, background 0.2s;
 }
 
 .filtro-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(245, 230, 200, 0.38);
 }
 
 .filtro-input:focus {
   outline: none;
   border-color: var(--accent);
+  background: rgba(245, 230, 200, 0.12);
 }
 
 .filtro-botones {
   display: flex;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(245, 230, 200, 0.18);
   flex-shrink: 0;
 }
 
 .filtro-btn {
-  padding: 6px 12px;
+  padding: 7px 14px;
   border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border-left: 1px solid rgba(245, 230, 200, 0.14);
+  background: rgba(245, 230, 200, 0.07);
+  color: rgba(245, 230, 200, 0.70);
   font-size: 12px;
   font-weight: 600;
+  font-family: var(--sans);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.3px;
 }
 
 .filtro-btn:first-child {
@@ -311,21 +394,25 @@
 }
 
 .filtro-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(245, 230, 200, 0.16);
+  color: rgba(245, 230, 200, 0.95);
 }
 
 .filtro-btn-activo {
-  background: var(--accent);
-  color: var(--slate);
-}
-
-.filtro-btn-activo:hover {
-  background: var(--accent);
-  opacity: 0.9;
+  background: var(--accent) !important;
+  color: #fff !important;
 }
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
+  .app-container {
+    padding: 32px 16px 60px;
+  }
+
+  .form-card {
+    padding: 16px;
+  }
+
   .form-agregar {
     flex-direction: column;
     align-items: stretch;

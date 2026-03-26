@@ -69,7 +69,10 @@ export default function App() {
           {theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
         </button>
       </div>
-      <Textbox onAdd={addTarea} />
+      <div className="header-divider" />
+      <div className="form-card">
+        <Textbox onAdd={addTarea} />
+      </div>
 
       {seleccionados.size > 0 && (
         <div className="acciones-masivas">
