@@ -31,10 +31,11 @@ export default function App() {
   }
 
   const toggleTodos = () => {
-    if (seleccionados.size === tareas.length) {
+    const indicesFiltrados = tareasFiltradas.map(({ indice }) => indice);
+    if (indicesFiltrados.length > 0 && indicesFiltrados.every(i => seleccionados.has(i))) {
       setSeleccionados(new Set());
     } else {
-      setSeleccionados(new Set(tareas.map((_, i) => i)));
+      setSeleccionados(new Set(indicesFiltrados));
     }
   }
 
@@ -87,7 +88,7 @@ export default function App() {
               <th className="col-check">
                 <input
                   type="checkbox"
-                  checked={tareas.length > 0 && seleccionados.size === tareas.length}
+                  checked={tareasFiltradas.length > 0 && tareasFiltradas.every(({ indice }) => seleccionados.has(indice))}
                   onChange={toggleTodos}
                 />
               </th>
