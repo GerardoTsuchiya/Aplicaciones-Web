@@ -49,9 +49,7 @@ export default function App() {
     setSeleccionados(new Set());
   }
 
-  const tareasFiltradas = tareas
-    .map((tarea, indice) => ({ tarea, indice }))
-    .filter(({ tarea }) => {
+  const tareasFiltradas = tareas.map((tarea, indice) => ({ tarea, indice })).filter(({ tarea }) => {
       const texto = busqueda.toLowerCase();
       const coincideTexto =
         tarea.titulo.toLowerCase().includes(texto) ||
@@ -115,7 +113,7 @@ export default function App() {
                         className={`filtro-btn${filtroEstado === opcion ? ' filtro-btn-activo' : ''}`}
                         onClick={() => setFiltroEstado(opcion)}
                       >
-                        {opcion === 'todos' ? 'Todos' : opcion === 'completadas' ? '✅ Completadas' : '⏳ Pendientes'}
+                        {opcion === 'todos' ? 'Todos' : opcion === 'completadas' ? 'Completadas' : 'Pendientes'}
                       </button>
                     ))}
                   </div>

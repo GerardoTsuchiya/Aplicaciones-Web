@@ -1,5 +1,4 @@
 import type { Tarea } from '../store';
-import './Tarjeta.css';
 
 interface TarjetaProps {
     tarea: Tarea;
