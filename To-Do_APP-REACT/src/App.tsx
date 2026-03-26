@@ -8,6 +8,8 @@ export default function App() {
   const { tareas, addTarea, deleteTarea, editTarea, completeTarea, completarVarios, eliminarVarios } = useTareasStore();
   const { theme, toggleTheme } = useThemeStore();
   const [seleccionados, setSeleccionados] = useState<Set<number>>(new Set());
+  const [busqueda, setBusqueda] = useState('');
+  const [filtroEstado, setFiltroEstado] = useState<'todos' | 'completadas' | 'pendientes'>('todos');
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -46,6 +48,20 @@ export default function App() {
     setSeleccionados(new Set());
   }
 
+  const tareasFiltradas = tareas
+    .map((tarea, indice) => ({ tarea, indice }))
+    .filter(({ tarea }) => {
+      const texto = busqueda.toLowerCase();
+      const coincideTexto =
+        tarea.titulo.toLowerCase().includes(texto) ||
+        tarea.descripcion.toLowerCase().includes(texto);
+      const coincideEstado =
+        filtroEstado === 'todos' ||
+        (filtroEstado === 'completadas' && tarea.completado) ||
+        (filtroEstado === 'pendientes' && !tarea.completado);
+      return coincideTexto && coincideEstado;
+    });
+
   return (
     <div className="app-container">
       <div className="app-header">
@@ -83,14 +99,16 @@ export default function App() {
             </tr>
           </thead>
           <tbody>
-            {tareas.length === 0 ? (
+            {tareasFiltradas.length === 0 ? (
               <tr>
                 <td colSpan={6} className="tabla-vacia">
-                  No hay tareas. Agrega una nueva tarea para comenzar.
+                  {tareas.length === 0
+                    ? 'No hay tareas. Agrega una nueva tarea para comenzar.'
+                    : 'Ninguna tarea coincide con el filtro actual.'}
                 </td>
               </tr>
             ) : (
-              tareas.map((tarea, indice) => (
+              tareasFiltradas.map(({ tarea, indice }) => (
                 <Tarjeta
                   key={indice}
                   tarea={tarea}
