@@ -98,6 +98,30 @@ export default function App() {
               <th>Fecha de creación</th>
               <th className="col-acciones">Acciones</th>
             </tr>
+            <tr className="filtro-fila">
+              <td colSpan={6} className="filtro-celda">
+                <div className="filtro-controles">
+                  <input
+                    className="filtro-input"
+                    type="text"
+                    placeholder="Buscar por título o descripción..."
+                    value={busqueda}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                  />
+                  <div className="filtro-botones">
+                    {(['todos', 'completadas', 'pendientes'] as const).map((opcion) => (
+                      <button
+                        key={opcion}
+                        className={`filtro-btn${filtroEstado === opcion ? ' filtro-btn-activo' : ''}`}
+                        onClick={() => setFiltroEstado(opcion)}
+                      >
+                        {opcion === 'todos' ? 'Todos' : opcion === 'completadas' ? '✅ Completadas' : '⏳ Pendientes'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </td>
+            </tr>
           </thead>
           <tbody>
             {tareasFiltradas.length === 0 ? (
