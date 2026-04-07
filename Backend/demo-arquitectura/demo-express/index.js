@@ -4,9 +4,9 @@ const app = express();
 const port = 3000;
 
 let usuarios = [
-    { id: 1, name: "Alice", apellido: "Smith" },
-    { id: 2, name: "Bob", apellido: "Johnson" },
-    { id: 3, name: "Charlie", apellido: "Brown" }
+    { id: 1, nombre: "Alice", apellido: "Smith" },
+    { id: 2, nombre: "Bob", apellido: "Johnson" },
+    { id: 3, nombre: "Charlie", apellido: "Brown" }
 ];
 
 app.use(express.json()); // Middleware para parsear JSON en el cuerpo de las solicitudes
