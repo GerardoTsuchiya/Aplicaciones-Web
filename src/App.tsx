@@ -1,3 +1,4 @@
+import { Button } from "./components/ui/button";
 import { useUsuarios } from "./hooks/usuarios.hook"
 import 'tailwindcss'
 
@@ -10,13 +11,12 @@ function App() {
   return (
     <>
       <h1 className="text-3xl font-bold underline">Listar Usuarios</h1>
-      <button  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => refetch()}>Actualizar</button>
-
       <ul>
         {data.data.map((usuario) => (
           <li key={usuario.id}>{usuario.nombre} {usuario.apellido}</li>
         ))}
       </ul>
+      <Button variant="default" onClick={() => refetch()}>Actualizar</Button>
     </>
   )
 }

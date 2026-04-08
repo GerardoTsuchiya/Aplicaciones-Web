@@ -8,6 +8,10 @@ SPA construida con React 19 + Vite + TypeScript que consume la API REST del back
 - **Vite 8** — bundler y dev server con HMR
 - **TypeScript** — tipado estático
 - **TanStack Query** — gestión de estado del servidor (fetch, caché, revalidación)
+- **Tailwind CSS v4** — estilos utility-first, integrado via `@tailwindcss/vite`
+- **shadcn/ui** — componentes accesibles copiados al proyecto (`src/components/ui/`)
+- **Radix UI** — primitivos accesibles base de shadcn
+- **lucide-react** — iconos SVG
 
 ## Correr el proyecto
 
@@ -24,8 +28,26 @@ npm run preview  # sirve el build localmente
 
 ```
 src/
+├── components/
+│   └── ui/
+│       └── button.tsx        ← Button de shadcn con variantes cva
 ├── hooks/
-│   └── usuarios.hook.ts  ← useUsuarios: useQuery encapsulado con interfaces tipadas
-├── App.tsx               ← componente raíz
-└── main.tsx              ← monta la app con QueryClientProvider
+│   └── usuarios.hook.ts      ← useUsuarios: useQuery encapsulado con interfaces tipadas
+├── lib/
+│   └── utils.ts              ← función cn (clsx + tailwind-merge)
+├── App.tsx                   ← componente raíz
+├── index.css                 ← Tailwind v4 + tokens CSS de shadcn + fuente Geist
+└── main.tsx                  ← monta la app con QueryClientProvider
 ```
+
+## Agregar componentes shadcn
+
+```bash
+npx shadcn@latest add <componente>
+# Ejemplos:
+npx shadcn@latest add card
+npx shadcn@latest add input
+npx shadcn@latest add dialog
+```
+
+Los componentes se copian en `src/components/ui/` y son completamente editables.
