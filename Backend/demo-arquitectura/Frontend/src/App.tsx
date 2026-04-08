@@ -1,4 +1,6 @@
+import { Button } from "./components/ui/button";
 import { useUsuarios } from "./hooks/usuarios.hook"
+import 'tailwindcss'
 
 function App() {
   const { data, isPending, isError, error, refetch } = useUsuarios();
@@ -8,14 +10,13 @@ function App() {
 
   return (
     <>
-      <h1>Listar Usuarios</h1>
-      <button onClick={() => refetch()}>Actualizar</button>
-
+      <h1 className="text-3xl font-bold underline">Listar Usuarios</h1>
       <ul>
         {data.data.map((usuario) => (
           <li key={usuario.id}>{usuario.nombre} {usuario.apellido}</li>
         ))}
       </ul>
+      <Button variant="default" onClick={() => refetch()}>Actualizar</Button>
     </>
   )
 }
