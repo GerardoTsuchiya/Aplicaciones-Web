@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery, useMutation, useQueryClient } from '@tansta
 
 export interface Usuario {
     id: number;
-    name: string;
+    nombre: string;
     apellido: string;
 }
 
@@ -10,12 +10,14 @@ export interface UsuariosResponse {
     data: Usuario[];
 }
 
+const URL = 'http://localhost:3000/';
+
 export const useUsuarios = () => {
     return useQuery<UsuariosResponse, Error>({
         queryKey: ['getUsuarios'],
         queryFn: async () => {
             try {
-                const response = await fetch('http://localhost:3000/usuarios');
+                const response = await fetch(`${URL}usuarios`);
                 if (!response.ok) {
                     throw new Error('Error al listar usuarios');
                 }
@@ -36,7 +38,7 @@ export const useAgregarUsuario = () => {
     return useMutation({
         mutationKey: ['mutateUsuarios'],
         mutationFn: async (usuario: Usuario) => {
-            const response = await fetch('http://localhost:3000/usuarios', {
+            const response = await fetch(`${URL}usuarios`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
