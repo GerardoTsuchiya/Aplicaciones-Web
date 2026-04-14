@@ -48,8 +48,8 @@ app.post("/usuarios", (req, res) => {
     const apellido = req.body.apellido; // Suponiendo que el cliente envía un JSON con un campo "apellido"
     const usuario = { 
         id: Math.floor(Math.random() * 1000),
-        name: nombre,
-        apellido: apellido
+        nombre,
+        apellido
     };
     usuarios.push(usuario);
     res.status(201).json({ message: "Usuario creado", usuario: usuario });
