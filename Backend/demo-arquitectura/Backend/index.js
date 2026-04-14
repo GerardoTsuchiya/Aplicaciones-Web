@@ -66,7 +66,7 @@ app.patch("/usuarios/:id", (req, res) => {
     const nombre = req.body.nombre; // Suponiendo que el cliente envía un JSON con un campo "nombre"
     const apellido = req.body.apellido; // Suponiendo que el cliente envía un JSON con un campo "apellido"
     if(nombre){
-        usuario.name = nombre;
+        usuario.nombre = nombre;
     }
     if(apellido){
         usuario.apellido = apellido;
@@ -87,7 +87,7 @@ app.put("/usuarios/:id", (req, res) => {
         res.status(400).json({ message: "Faltan campos obligatorios" });
         return;
     }
-    usuario.name = nombre;
+    usuario.nombre = nombre;
     usuario.apellido = apellido;
     res.status(200).json({ message: "Usuario actualizado", usuario: usuario });
 

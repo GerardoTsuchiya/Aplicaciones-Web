@@ -37,7 +37,7 @@ export const useAgregarUsuario = () => {
     const newQueryClient = useQueryClient();
     return useMutation({
         mutationKey: ['mutateUsuarios'],
-        mutationFn: async (usuario: Usuario) => {
+        mutationFn: async (usuario: Omit<Usuario, "id">) => {
             const response = await fetch(`${URL}usuarios`, {
                 method: 'POST',
                 headers: {
@@ -55,4 +55,48 @@ export const useAgregarUsuario = () => {
             newQueryClient.invalidateQueries({ queryKey: ['getUsuarios'] });
         }
     });
+}
+
+export const useEliminarUsuario= () => {
+    const newQueryClient = useQueryClient();
+    return useMutation({
+        mutationKey: ['mutateUsuarios'],
+        mutationFn: async (usuarioId: number) => {
+            const response = await fetch(`${URL}usuarios/${usuarioId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error('Error al eliminar usuario');
+            }
+            return response.json();
+        },
+        onSuccess: () => {
+            //Aqui volvemos a llamar la consulta para actualizar la lista.
+            newQueryClient.invalidateQueries({ queryKey: ['getUsuarios'] });
+        }
+    });
+}
+
+export const useEditarUsuario = () => {
+    const newQueryClient = useQueryClient();
+    return useMutation({
+        mutationKey: ['mutateUsuarios'],
+        mutationFn: async (usuario: Usuario) => {
+            const response = await fetch(`${URL}usuarios/${usuario.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            });
+            if (!response.ok) {
+                throw new Error('Error al editar usuario');
+            }
+            return response.json();
+        },
+        onSuccess: () => {
+            //Aqui volvemos a llamar la consulta para actualizar la lista.
+            newQueryClient.invalidateQueries({ queryKey: ['getUsuarios'] });
+        }
+    });    
 }
