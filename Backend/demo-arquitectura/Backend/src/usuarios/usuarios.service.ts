@@ -5,6 +5,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
+  private nextId = 4;
   private usuarios: Usuario[] = [
     { id: 1, nombre: 'Alice', apellido: 'Smith' },
     { id: 2, nombre: 'Bob', apellido: 'Johnson' },
@@ -23,7 +24,7 @@ export class UsuariosService {
 
   create(dto: CreateUsuarioDto) {
     const usuario: Usuario = {
-      id: Math.floor(Math.random() * 1000),
+      id: this.nextId++,
       nombre: dto.nombre,
       apellido: dto.apellido,
     };
@@ -34,8 +35,8 @@ export class UsuariosService {
   update(id: number, dto: UpdateUsuarioDto) {
     const usuario = this.usuarios.find((u) => u.id === id);
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
-    if (dto.nombre) usuario.nombre = dto.nombre;
-    if (dto.apellido) usuario.apellido = dto.apellido;
+    if (dto.nombre !== undefined) usuario.nombre = dto.nombre;
+    if (dto.apellido !== undefined) usuario.apellido = dto.apellido;
     return { message: 'Usuario actualizado', usuario };
   }
 
