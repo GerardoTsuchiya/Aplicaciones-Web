@@ -1,53 +1,98 @@
-# Frontend — demo-arquitectura
+# Frontend - demo-arquitectura
 
-SPA construida con React 19 + Vite + TypeScript que consume la API REST del backend (`demo-express`).
+SPA construida con React, Vite y TypeScript. Consume la API REST del backend NestJS y usa TanStack Query para manejar estado del servidor, cache e invalidacion de consultas.
 
 ## Stack
 
-- **React 19** — UI library
-- **Vite 8** — bundler y dev server con HMR
-- **TypeScript** — tipado estático
-- **TanStack Query** — gestión de estado del servidor (fetch, caché, revalidación)
-- **Tailwind CSS v4** — estilos utility-first, integrado via `@tailwindcss/vite`
-- **shadcn/ui** — componentes accesibles copiados al proyecto (`src/components/ui/`)
-- **Radix UI** — primitivos accesibles base de shadcn
-- **lucide-react** — iconos SVG
+- React 19
+- Vite 8
+- TypeScript
+- TanStack Query
+- Tailwind CSS v4
+- shadcn/ui
+- Radix UI
+- lucide-react
 
-## Correr el proyecto
+## Instalacion
 
 ```bash
 npm install
-npm run dev      # dev server en http://localhost:5173
-npm run build    # verificación de tipos + build de producción
-npm run preview  # sirve el build localmente
 ```
 
-> El backend debe estar corriendo en `http://localhost:3000` para que el fetch funcione.
+## Desarrollo
+
+```bash
+npm run dev
+```
+
+La app corre en:
+
+```txt
+http://localhost:5173
+```
+
+El backend debe estar activo en:
+
+```txt
+http://localhost:3000
+```
 
 ## Estructura
 
-```
+```txt
 src/
-├── components/
-│   └── ui/
-│       └── button.tsx        ← Button de shadcn con variantes cva
+├── App.tsx
+├── main.tsx
+├── index.css
 ├── hooks/
-│   └── usuarios.hook.ts      ← useUsuarios: useQuery encapsulado con interfaces tipadas
+│   └── usuarios.hook.ts
 ├── lib/
-│   └── utils.ts              ← función cn (clsx + tailwind-merge)
-├── App.tsx                   ← componente raíz
-├── index.css                 ← Tailwind v4 + tokens CSS de shadcn + fuente Geist
-└── main.tsx                  ← monta la app con QueryClientProvider
+│   └── utils.ts
+└── components/
+    └── ui/
+        ├── button.tsx
+        ├── card.tsx
+        ├── dialog.tsx
+        ├── dropdown-menu.tsx
+        ├── field.tsx
+        ├── input.tsx
+        ├── label.tsx
+        ├── separator.tsx
+        └── table.tsx
 ```
 
-## Agregar componentes shadcn
+## Flujo de datos
+
+`src/main.tsx` crea un `QueryClient` y envuelve la app con `QueryClientProvider`.
+
+`src/hooks/usuarios.hook.ts` concentra las llamadas HTTP a `http://localhost:3000/usuarios`:
+
+- `useUsuarios`: lista usuarios.
+- `useAgregarUsuario`: crea usuarios.
+- `useEliminarUsuario`: elimina usuarios.
+- `useEditarUsuario`: actualiza usuarios.
+
+Despues de crear, editar o eliminar, los hooks invalidan la consulta `getUsuarios` para refrescar la tabla.
+
+`src/App.tsx` renderiza:
+
+- tabla de usuarios,
+- boton para actualizar,
+- formulario para agregar usuario,
+- menu de acciones por fila,
+- dialogo para editar usuario.
+
+## Scripts
 
 ```bash
-npx shadcn@latest add <componente>
-# Ejemplos:
-npx shadcn@latest add card
-npx shadcn@latest add input
-npx shadcn@latest add dialog
+npm run dev      # servidor de desarrollo
+npm run build    # verificacion de tipos y build de produccion
+npm run lint     # ESLint
+npm run preview  # sirve el build local
 ```
 
-Los componentes se copian en `src/components/ui/` y son completamente editables.
+## Notas
+
+- La URL del backend esta definida en `src/hooks/usuarios.hook.ts`.
+- El backend actual exige `email` al crear usuarios. Si el formulario no envia ese campo, la mutacion de creacion fallara hasta ajustar la UI o el DTO del backend.
+- Los componentes shadcn/ui estan copiados dentro de `src/components/ui` y se pueden editar directamente.

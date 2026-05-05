@@ -1,7 +1,7 @@
 node_modules/
 .claude/
+CLAUDE.md
 dist/
-
-
-/generated/prisma
-.env
+*.zip
+*.7z
+*.rar
