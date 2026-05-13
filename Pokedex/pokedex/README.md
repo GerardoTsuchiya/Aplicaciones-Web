@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# Pokédex con PokéAPI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Materia:** Aplicaciones Web  
+**Fecha inicio:** 2026-05-12  
+**Stack:** React + Vite + TypeScript + React Router  
+**API:** https://pokeapi.co/api/v2  
+**Repo:** Aplicaciones_Web/Pokedex/pokedex/
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Progreso por clase
 
-## React Compiler
+### Clase 1 — Completada ✅
+**Objetivo:** Estructura base y primer consumo de API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Archivos creados:
+- `src/types/pokemon.ts` — interfaces TypeScript
+- `src/services/pokemonService.ts` — funciones de fetch
+- `src/pages/HomePage.tsx` — listado de 20 Pokémon con sprites
+- `src/App.tsx` y `src/main.tsx` — entrada de la app
 
-## Expanding the ESLint configuration
+**Entregable:** 20 Pokémon visibles en pantalla con nombre e imagen.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Clase 2 — Pendiente
+Componente `PokemonCard`, navegación con React Router, pantalla de detalle.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Clase 3 — Pendiente
+Búsqueda, filtros por tipo, favoritos con localStorage.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Clase 4 — Pendiente
+Comparador de estadísticas, diseño final, demo.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Historial de commits
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Hash | Mensaje |
+|------|---------|
+| `717568e` | feat: creación de estructura base e instalación de dependencias base |
+| `f995d56` | feat(clase1): tipos, servicio y listado inicial de 20 pokémon |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
