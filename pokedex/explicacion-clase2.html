@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 2 — Explicación</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+
+    header { background: #1e293b; padding: 2rem; border-bottom: 3px solid #6366f1; }
+    header h1 { font-size: 1.8rem; color: #a5b4fc; }
+    header p  { color: #94a3b8; margin-top: 0.25rem; }
+
+    main { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .card-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: #0f172a;
+      border-bottom: 1px solid #334155;
+    }
+    .badge {
+      background: #6366f1; color: #fff;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge.green  { background: #10b981; }
+    .badge.yellow { background: #f59e0b; color: #000; }
+    .badge.red    { background: #ef4444; }
+    .card-header h2 { font-size: 1.1rem; color: #e2e8f0; }
+    .card-body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+
+    .concept { color: #94a3b8; font-size: 0.95rem; }
+    .concept strong { color: #c7d2fe; }
+
+    pre {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+    .kw   { color: #c084fc; }
+    .fn   { color: #60a5fa; }
+    .str  { color: #34d399; }
+    .cm   { color: #475569; font-style: italic; }
+    .tag  { color: #fb923c; }
+    .attr { color: #facc15; }
+
+    .flow {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;
+    }
+    .flow-box {
+      background: #0f172a; border: 1px solid #334155;
+      border-radius: 8px; padding: 0.5rem 0.9rem;
+      font-size: 0.85rem; color: #e2e8f0; text-align: center;
+    }
+    .flow-arrow { color: #6366f1; font-size: 1.2rem; }
+
+    .pitfall {
+      background: #450a0a; border: 1px solid #7f1d1d;
+      border-radius: 8px; padding: 0.75rem 1rem;
+      font-size: 0.875rem; color: #fca5a5;
+    }
+    .pitfall::before { content: "⚠️  "; }
+
+    .tip {
+      background: #052e16; border: 1px solid #14532d;
+      border-radius: 8px; padding: 0.75rem 1rem;
+      font-size: 0.875rem; color: #86efac;
+    }
+    .tip::before { content: "✅  "; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    th { background: #0f172a; color: #a5b4fc; padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #334155; }
+    td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+    tr:last-child td { border-bottom: none; }
+
+    footer { text-align: center; padding: 2rem; color: #475569; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Pokédex — Clase 2</h1>
+  <p>Componentes reutilizables, React Router y pantalla de detalle</p>
+</header>
+
+<main>
+
+  <!-- ─── CONCEPTO 1: Componente reutilizable ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge">Concepto 1</span>
+      <h2>Componente reutilizable con props tipadas</h2>
+    </div>
+    <div class="card-body">
+      <p class="concept">
+        Un <strong>componente</strong> en React es una función que recibe datos (<em>props</em>) y devuelve JSX.
+        Al tiparlo con una <strong>interface</strong> de TypeScript, el compilador te avisa si olvidas pasar
+        algún dato o si lo mandas del tipo equivocado.
+      </p>
+      <pre><span class="cm">// Interfaz de props — define el contrato del componente</span>
+<span class="kw">interface</span> <span class="fn">PokemonCardProps</span> {
+  name: <span class="str">string</span>;
+  url:  <span class="str">string</span>;
+}
+
+<span class="cm">// El componente recibe esas props y las desestructura</span>
+<span class="kw">function</span> <span class="fn">PokemonCard</span>({ name, url }: <span class="fn">PokemonCardProps</span>) {
+  <span class="kw">return</span> <span class="tag">&lt;div&gt;</span>{name}<span class="tag">&lt;/div&gt;</span>;
+}</pre>
+      <div class="tip">Cada tarjeta es independiente: recibe su <code>name</code> y hace su propio fetch. Así <code>HomePage</code> solo lista nombres y las tarjetas se llenan solas en paralelo.</div>
+      <div class="pitfall">Si pones toda la lógica directo en <code>HomePage</code> sin extraer el componente, violas RT08 (no poner todo en un solo archivo) y el código se vuelve imposible de reutilizar en otras páginas.</div>
+    </div>
+  </div>
+
+  <!-- ─── CONCEPTO 2: useEffect para fetch ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge green">Concepto 2</span>
+      <h2>useEffect para cargar datos al montar</h2>
+    </div>
+    <div class="card-body">
+      <p class="concept">
+        <strong>useEffect</strong> ejecuta código con efectos secundarios (como llamadas a API) después
+        de que el componente se renderiza. El array de dependencias controla <em>cuándo</em> vuelve a ejecutarse.
+      </p>
+      <pre><span class="kw">useEffect</span>(() => {
+  <span class="fn">getPokemonDetails</span>(name)
+    .then((data) => {
+      <span class="fn">setPokemon</span>(data);
+      <span class="fn">setLoading</span>(<span class="kw">false</span>);
+    })
+    .catch(() => <span class="fn">setLoading</span>(<span class="kw">false</span>));
+}, [name]); <span class="cm">// ← se re-ejecuta si "name" cambia</span></pre>
+      <div class="pitfall">Si dejas el array vacío <code>[]</code>, el efecto solo corre una vez al montar. Si la tarjeta recibe un <code>name</code> diferente más adelante (búsqueda, filtros), nunca actualizará los datos.</div>
+    </div>
+  </div>
+
+  <!-- ─── CONCEPTO 3: React Router ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge yellow">Concepto 3</span>
+      <h2>React Router — Rutas y navegación</h2>
+    </div>
+    <div class="card-body">
+      <p class="concept">
+        <strong>React Router v7</strong> mapea URLs a componentes. Vive en <code>App.tsx</code> y
+        envuelve toda la app. Con <code>:id</code> en la ruta defines un parámetro dinámico que
+        cada página puede leer con <code>useParams</code>.
+      </p>
+      <pre><span class="cm">// App.tsx</span>
+<span class="tag">&lt;BrowserRouter&gt;</span>
+  <span class="tag">&lt;Routes&gt;</span>
+    <span class="tag">&lt;Route</span> <span class="attr">path</span>=<span class="str">"/"</span>            <span class="attr">element</span>=<span class="str">{&lt;HomePage /&gt;}</span>   <span class="tag">/&gt;</span>
+    <span class="tag">&lt;Route</span> <span class="attr">path</span>=<span class="str">"/pokemon/:id"</span> <span class="attr">element</span>=<span class="str">{&lt;DetailPage /&gt;}</span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;/Routes&gt;</span>
+<span class="tag">&lt;/BrowserRouter&gt;</span></pre>
+
+      <table>
+        <tr><th>Herramienta</th><th>Para qué sirve</th></tr>
+        <tr><td><code>BrowserRouter</code></td><td>Proveedor de router — va en la raíz</td></tr>
+        <tr><td><code>Routes / Route</code></td><td>Define qué componente renderiza cada URL</td></tr>
+        <tr><td><code>&lt;Link to="..."&gt;</code></td><td>Navega sin recargar la página (como un <code>&lt;a&gt;</code> inteligente)</td></tr>
+        <tr><td><code>useParams()</code></td><td>Lee el parámetro <code>:id</code> de la URL actual</td></tr>
+      </table>
+
+      <div class="tip">Usa <code>&lt;Link&gt;</code> en lugar de <code>&lt;a href&gt;</code>. Un <code>&lt;a&gt;</code> normal recarga toda la página y pierde el estado de React.</div>
+    </div>
+  </div>
+
+  <!-- ─── CONCEPTO 4: DetailPage + useParams ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge red">Concepto 4</span>
+      <h2>DetailPage — Leer parámetros de URL</h2>
+    </div>
+    <div class="card-body">
+      <p class="concept">
+        <code>useParams</code> devuelve un objeto con los parámetros dinámicos de la ruta actual.
+        Si la ruta es <code>/pokemon/:id</code> y la URL es <code>/pokemon/25</code>, entonces
+        <code>id</code> vale <code>"25"</code>.
+      </p>
+      <pre><span class="kw">function</span> <span class="fn">DetailPage</span>() {
+  <span class="kw">const</span> { id } = <span class="fn">useParams</span>&lt;{ id: <span class="str">string</span> }&gt;();
+
+  <span class="fn">useEffect</span>(() => {
+    <span class="kw">if</span> (!id) <span class="kw">return</span>;
+    <span class="fn">getPokemonDetails</span>(id).then(...)
+  }, [id]);
+}</pre>
+
+      <p class="concept">La página de detalle muestra:</p>
+      <div class="flow">
+        <div class="flow-box">Imagen (sprites)</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-box">Tipos</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-box">Altura / Peso</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-box">Habilidades</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-box">Stats base</div>
+      </div>
+
+      <div class="pitfall">Los valores de <code>height</code> y <code>weight</code> que devuelve PokéAPI están en decímetros y hectogramos. Divídelos entre 10 para obtener metros y kilogramos.</div>
+    </div>
+  </div>
+
+  <!-- ─── FLUJO COMPLETO ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge">Flujo completo de Clase 2</span>
+      <h2>¿Cómo se conecta todo?</h2>
+    </div>
+    <div class="card-body">
+      <div class="flow">
+        <div class="flow-box">Usuario visita <code>/</code></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box"><code>HomePage</code><br/>llama getPokemonList</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Renderiza 20<br/><code>PokemonCard</code></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Cada card llama<br/>getPokemonDetails</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Card muestra nombre,<br/>número, imagen, tipos</div>
+      </div>
+      <br/>
+      <div class="flow">
+        <div class="flow-box">Usuario hace clic<br/>en una card</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Router navega a<br/><code>/pokemon/25</code></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box"><code>DetailPage</code><br/>lee id con useParams</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Llama getPokemonDetails(25)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Muestra toda<br/>la información</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── ARCHIVOS MODIFICADOS ─── -->
+  <div class="card">
+    <div class="card-header">
+      <span class="badge green">Resumen</span>
+      <h2>Archivos creados / modificados en Clase 2</h2>
+    </div>
+    <div class="card-body">
+      <table>
+        <tr><th>Archivo</th><th>Qué hace</th></tr>
+        <tr><td><code>src/components/PokemonCard.tsx</code></td><td>Tarjeta reutilizable — recibe name+url, hace su propio fetch, navega al detalle</td></tr>
+        <tr><td><code>src/pages/DetailPage.tsx</code></td><td>Página de detalle — lee :id de la URL y muestra toda la info del Pokémon</td></tr>
+        <tr><td><code>src/App.tsx</code></td><td>Configuración de React Router con rutas / y /pokemon/:id</td></tr>
+        <tr><td><code>src/pages/HomePage.tsx</code></td><td>Actualizado para usar PokemonCard en lugar de li inline</td></tr>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer>Aplicaciones Web — UABC · Clase 2 · Pokédex con PokéAPI</footer>
+
+</body>
+</html>
