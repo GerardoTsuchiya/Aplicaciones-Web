@@ -1,53 +1,39 @@
 import { useEffect, useState } from "react";
 import type { PokemonListItem } from "../types/pokemon";
 import { getPokemonList } from "../services/pokemonService";
-
+import PokemonCard from "../components/PokemonCard";
 
 function HomePage() {
-    const [pokemons, setPokemons] = useState<PokemonListItem[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [pokemons, setPokemons] = useState<PokemonListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        async function fetchPokemons() {
-            try {
-                const data = await getPokemonList(20);
-                setPokemons(data.results);
-                setLoading(false);
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error.message);
-                } else {
-                    setError("No sé que pasó la neta");
-                }
-                setLoading(false);
-            }
-        }
+  useEffect(() => {
+    getPokemonList(20)
+      .then((data) => {
+        setPokemons(data.results);
+        setLoading(false);
+      })
+      .catch((err: unknown) => {
+        setError(err instanceof Error ? err.message : "Error desconocido");
+        setLoading(false);
+      });
+  }, []);
 
-        fetchPokemons();
-    }, []);
-
-    return (
-        <div>
-            <h1>Pokémon List</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {!loading && !error &&
-                <ul>
-                        {pokemons.map((pokemon) => {
-                            const id = pokemon.url.split('/').filter(Boolean).pop();
-                            const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-                            
-                            return (
-                                <li key={pokemon.name}>
-                                    <img src={imageUrl} alt={pokemon.name} />
-                                    <p>{pokemon.name}</p>
-                                </li>
-                            );
-                        })}
-                </ul>}
+  return (
+    <div className="home">
+      <h1 className="home__title">Pokédex</h1>
+      {loading && <p className="status">Cargando Pokémon…</p>}
+      {error && <p className="status status--error">{error}</p>}
+      {!loading && !error && (
+        <div className="grid">
+          {pokemons.map((pokemon) => (
+            <PokemonCard key={pokemon.name} name={pokemon.name} url={pokemon.url} />
+          ))}
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
 export default HomePage;
